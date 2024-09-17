@@ -1,0 +1,8 @@
+{% extends 'admin/master.html' %} {% block body %}
+<h2>Update Bills</h2>
+<p>Click the button below to fetch and update bills from the RSS feed.</p>
+<form method="POST" action="{{ url_for('update_bills.update_bills') }}">
+  {{ form.csrf_token }}
+  <input type="submit" value="Update Bills" class="btn btn-primary" />
+</form>
+{% endblock %}

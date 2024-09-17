@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<h2 class="header">My Tracked Bills</h2>
+<div class="row">
+  {% for bill in bills %}
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ bill.number }}</span>
+        <p>{{ bill.summary[:200] }}...</p>
+        <p><strong>Category:</strong> {{ bill.category }}</p>
+        <p><strong>Status:</strong> {{ bill.status }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{{ url_for('main.bill_detail', bill_number=bill.number) }}"
+          >View Details</a
+        >
+        <a
+          href="{{ url_for('main.untrack_bill', bill_number=bill.number) }}"
+          class="waves-effect waves-light btn-small red"
+          >Untrack</a
+        >
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>You are not tracking any bills yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

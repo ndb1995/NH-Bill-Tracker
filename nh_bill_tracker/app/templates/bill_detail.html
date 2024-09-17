@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block content %}
+<h1 class="header">Bill {{ bill.number }}</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Summary</span>
+    <table class="striped">
+      <tr>
+        <th>Session Year:</th>
+        <td>{{ bill.session_year }}</td>
+      </tr>
+      <tr>
+        <th>Title:</th>
+        <td>{{ bill.title }}</td>
+      </tr>
+      <tr>
+        <th>Next Hearing:</th>
+        <td>
+          {% if bill.next_hearing %} {{ bill.next_hearing.committee }} on {{
+          bill.next_hearing.date.strftime('%m/%d/%Y') }} at {{
+          bill.next_hearing.time }} in {{ bill.next_hearing.location }} {% else
+          %} No hearing scheduled {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>General Status:</th>
+        <td>{{ bill.general_status }}</td>
+      </tr>
+      <tr>
+        <th>House Status:</th>
+        <td>{{ bill.house_status }}</td>
+      </tr>
+      <tr>
+        <th>Senate Status:</th>
+        <td>{{ bill.senate_status }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Recent Docket Entries</span>
+    <table class="striped">
+      {% for entry in bill.docket_entries[:3] %}
+      <tr>
+        <td>{{ entry.date.strftime('%m/%d/%Y') }}</td>
+        <td>{{ entry.chamber }}</td>
+        <td>{{ entry.action }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <a href="{{ bill.docket_link }}" class="btn-flat">View Entire Docket</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Actions</span>
+    {% if current_user.is_authenticated %} {% if bill in
+    current_user.tracked_bills %}
+    <a
+      href="{{ url_for('main.untrack_bill', bill_number=bill.number) }}"
+      class="waves-effect waves-light btn red"
+      >Untrack Bill</a
+    >
+    {% else %}
+    <a
+      href="{{ url_for('main.track_bill', bill_number=bill.number) }}"
+      class="waves-effect waves-light btn"
+      >Track Bill</a
+    >
+    {% endif %} {% endif %}
+    <a
+      href="{{ bill.html_link }}"
+      class="waves-effect waves-light btn"
+      target="_blank"
+      >View Full Bill Text</a
+    >
+  </div>
+</div>
+{% endblock %}

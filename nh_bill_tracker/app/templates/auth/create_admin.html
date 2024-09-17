@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<h1>Create Admin User</h1>
+<form action="" method="post">
+  <div class="input-field">
+    <input id="username" name="username" type="text" required />
+    <label for="username">Username</label>
+  </div>
+  <div class="input-field">
+    <input id="email" name="email" type="email" required />
+    <label for="email">Email</label>
+  </div>
+  <div class="input-field">
+    <input id="password" name="password" type="password" required />
+    <label for="password">Password</label>
+  </div>
+  <button class="btn waves-effect waves-light" type="submit">
+    Create Admin
+    <i class="material-icons right">send</i>
+  </button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+flask
+flask-sqlalchemy
+flask-migrate
+flask-login
+flask-admin
+flask-caching
+python-dotenv
+feedparser
+requests
+beautifulsoup4
+apscheduler
+aiohttp

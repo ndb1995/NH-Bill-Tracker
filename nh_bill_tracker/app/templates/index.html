@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+<h1>New Hampshire Bills</h1>
+<div class="row">
+  {% for bill in bills.items %}
+  <div class="col s12 m6">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">{{ bill.number }}</span>
+        <p>{{ bill.summary[:200] }}...</p>
+        <p>Status: {{ bill.status }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{{ url_for('main.bill_detail', bill_number=bill.number) }}"
+          >View Details</a
+        >
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>No bills found.</p>
+  {% endfor %}
+</div>
+{% if bills.items %}
+<ul class="pagination">
+  {% for page in bills.iter_pages() %} {% if page %} {% if page != bills.page %}
+  <li class="waves-effect">
+    <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
+  </li>
+  {% else %}
+  <li class="active"><a href="#">{{ page }}</a></li>
+  {% endif %} {% else %}
+  <li class="disabled"><a href="#">...</a></li>
+  {% endif %} {% endfor %}
+</ul>
+{% endif %} {% endblock %}
